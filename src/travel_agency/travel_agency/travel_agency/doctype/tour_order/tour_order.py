@@ -57,3 +57,21 @@ class TourOrder(Document):
 		self.refunded_amount = row.refunded_amount or 0
 		self.calculate_amounts()
 		self.db_update()
+
+	def recompute_cost_totals(self):
+		row = frappe.db.sql(
+			"""
+			select
+				sum(estimated_amount) as estimated_cost_amount,
+				sum(actual_amount) as actual_cost_amount
+			from `tabTour Cost Item`
+			where tour_order = %s and docstatus = 1
+			""",
+			self.name,
+			as_dict=True,
+		)[0]
+
+		self.estimated_cost_amount = row.estimated_cost_amount or 0
+		self.actual_cost_amount = row.actual_cost_amount or 0
+		self.calculate_amounts()
+		self.db_update()

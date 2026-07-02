@@ -1,0 +1,178 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:TCI-{YYYY}-{#####}",
+ "creation": "2026-07-02 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_info_section",
+  "tour_order",
+  "customer",
+  "supplier",
+  "cost_category",
+  "cost_name",
+  "quantity",
+  "estimated_amount",
+  "actual_amount",
+  "cost_date",
+  "status",
+  "finance_confirmed",
+  "voucher_attachment",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "basic_info_section",
+   "fieldtype": "Section Break",
+   "label": "基本信息"
+  },
+  {
+   "fieldname": "tour_order",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "旅行团单",
+   "options": "Tour Order",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "客户",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "供应商",
+   "options": "Supplier"
+  },
+  {
+   "fieldname": "cost_category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "费用类别",
+   "options": "酒店\n车队\n门票\n导游\n餐费\n机票\n火车票\n签证\n保险\n地接\n其他",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cost_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "费用名称",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "label": "数量"
+  },
+  {
+   "fieldname": "estimated_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "预计金额"
+  },
+  {
+   "fieldname": "actual_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "实际金额"
+  },
+  {
+   "default": "Today",
+   "fieldname": "cost_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "费用日期",
+   "reqd": 1
+  },
+  {
+   "default": "待确认",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "状态",
+   "options": "待确认\n已确认\n有争议\n已取消",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "finance_confirmed",
+   "fieldtype": "Check",
+   "label": "财务已确认"
+  },
+  {
+   "fieldname": "voucher_attachment",
+   "fieldtype": "Attach",
+   "label": "凭证附件"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "备注"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-07-02 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Travel Agency",
+ "name": "Tour Cost Item",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
