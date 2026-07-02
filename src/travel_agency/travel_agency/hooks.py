@@ -11,3 +11,5 @@ fixtures = [
 		"filters": [["module", "=", "Travel Agency"]],
 	},
 ]
+
+after_migrate = "travel_agency.setup.configure_chinese_defaults"

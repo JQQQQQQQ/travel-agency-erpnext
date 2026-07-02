@@ -1,0 +1,61 @@
+Travel Agency,旅行社管理
+Tour Order,旅行团单
+Tour Payment Ledger,团款流水
+Tour Cost Item,团单费用明细
+Supplier Payment Record,供应商付款单
+Tour Order Profit Report,团单利润表
+Receivable Payable Summary,应收应付汇总表
+Travel Agency Management,旅行社管理
+Customer,客户
+Supplier,供应商
+Data Import,数据导入
+Workspace,工作台
+Report,报表
+Reports,报表
+Core Business,核心业务
+Finance Ledger,财务流水
+Business Reports,经营报表
+Customer and Supplier,客户与供应商
+Tour Order Name,团单名称
+Tour Type,团型
+Sales Owner,销售负责人
+Order Status,团单状态
+Departure Date,出发日期
+Return Date,返程日期
+Departure City,出发地
+Destination,目的地
+Route Name,线路名称
+Traveler Count,出行人数
+Adult Count,成人数
+Child Count,儿童数
+Order Total Amount,订单总金额
+Received Amount,已收金额
+Refunded Amount,已退款金额
+Pending Receipt Amount,待收金额
+Estimated Cost Amount,预计成本
+Actual Cost Amount,实际成本
+Paid Amount,已付金额
+Pending Payment Amount,待付金额
+Estimated Profit Amount,预计毛利
+Actual Profit Amount,实际毛利
+Transaction Type,流水类型
+Payment Category,收付类别
+Payment Method,收付方式
+Transaction Date,流水日期
+Finance Confirmed,财务已确认
+Voucher Attachment,凭证附件
+Cost Category,费用类别
+Cost Name,费用名称
+Estimated Amount,预计金额
+Actual Amount,实际金额
+Cost Date,费用日期
+Payment Date,付款日期
+Supplier Payment,供应商付款
+Supplier Refund,供应商退款
+Receivable,应收
+Payable,应付
+Profit,利润
+Pending Receipt,待收款
+Pending Payment,待付款
+Upcoming Departure,即将出团
+Clear Filters,清除筛选
