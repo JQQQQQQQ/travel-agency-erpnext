@@ -190,123 +190,24 @@ function build_business_overview_html(frm, overview) {
 					border-radius: 8px;
 					padding: 10px 12px;
 				}
-				.travel-agency-overview .ta-inline-forms {
-					display: grid;
-					grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-					gap: 10px;
-					margin-bottom: 14px;
-				}
-				.travel-agency-overview .ta-inline-form {
-					border: 1px solid var(--border-color);
-					border-radius: 8px;
-					background: var(--fg-color);
-					padding: 10px 12px;
-				}
-				.travel-agency-overview .ta-inline-form summary {
-					cursor: pointer;
-					font-weight: 600;
-				}
-				.travel-agency-overview .ta-form-grid {
-					display: grid;
-					grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-					gap: 8px;
-					margin-top: 10px;
-				}
-				.travel-agency-overview .ta-form-field span {
-					display: block;
-					color: var(--text-muted);
-					font-size: 12px;
-					margin-bottom: 4px;
-				}
-				.travel-agency-overview .ta-form-actions {
+				.travel-agency-overview .ta-section-header {
 					display: flex;
-					align-items: end;
+					align-items: center;
+					justify-content: space-between;
+					gap: 10px;
+					margin: 18px 0 8px;
+				}
+				.travel-agency-overview .ta-section-header .ta-section-title {
+					margin: 0;
 				}
 			</style>
 			<div class="ta-card-grid">
 				${cards.map(([label, value]) => render_card(label, value, currency)).join("")}
 			</div>
-			${render_inline_forms()}
 			${render_cost_items(overview.cost_items || [], currency)}
 			${render_payment_ledgers(overview.payment_ledgers || [], currency)}
 			${render_supplier_payments(overview.supplier_payments || [], currency)}
 		</div>
-	`;
-}
-
-function render_inline_forms() {
-	const today = frappe.datetime.get_today();
-	return `
-		<div class="ta-section-title">${__("直接新增明细")}</div>
-		<div class="ta-inline-forms">
-			<details class="ta-inline-form">
-				<summary>${__("新增费用明细")}</summary>
-				<div class="ta-form-grid" data-section="cost">
-					${select_field("费用类别", "cost_category", ["酒店", "车队", "门票", "导游", "餐费", "机票", "火车票", "签证", "保险", "地接", "其他"])}
-					${input_field("费用名称", "cost_name", "text", "例如：桂林地接服务")}
-					${input_field("供应商", "supplier", "text", "填写系统中的供应商名称")}
-					${input_field("预计金额", "estimated_amount", "number")}
-					${input_field("实际金额", "actual_amount", "number")}
-					${input_field("费用日期", "cost_date", "date", "", today)}
-					<div class="ta-form-actions">
-						<button class="btn btn-primary btn-sm" data-action="save-cost">${__("保存费用明细")}</button>
-					</div>
-				</div>
-			</details>
-			<details class="ta-inline-form">
-				<summary>${__("新增团款流水")}</summary>
-				<div class="ta-form-grid" data-section="payment">
-					${select_field("流水类型", "transaction_type", ["收款", "退款"])}
-					${select_field("收款类别", "payment_category", ["定金", "尾款", "补款", "退款", "其他"])}
-					${input_field("金额", "amount", "number")}
-					${input_field("日期", "transaction_date", "date", "", today)}
-					${select_field("收付方式", "payment_method", ["微信", "支付宝", "现金", "银行卡", "对公转账", "其他"])}
-					<div class="ta-form-actions">
-						<button class="btn btn-primary btn-sm" data-action="save-payment">${__("保存团款流水")}</button>
-					</div>
-				</div>
-			</details>
-			<details class="ta-inline-form">
-				<summary>${__("新增供应商付款")}</summary>
-				<div class="ta-form-grid" data-section="supplier-payment">
-					${input_field("供应商", "supplier", "text", "填写系统中的供应商名称")}
-					${select_field("流水类型", "transaction_type", ["付款", "退款"])}
-					${select_field("付款类别", "payment_category", ["预付款", "尾款", "补款", "退款", "其他"])}
-					${input_field("金额", "amount", "number")}
-					${input_field("付款日期", "payment_date", "date", "", today)}
-					${select_field("付款方式", "payment_method", ["微信", "支付宝", "现金", "银行卡", "对公转账", "其他"])}
-					<div class="ta-form-actions">
-						<button class="btn btn-primary btn-sm" data-action="save-supplier-payment">${__("保存供应商付款")}</button>
-					</div>
-				</div>
-			</details>
-		</div>
-	`;
-}
-
-function input_field(label, fieldname, type, placeholder = "", value = "") {
-	return `
-		<label class="ta-form-field">
-			<span>${__(label)}</span>
-			<input
-				class="form-control"
-				data-field="${fieldname}"
-				type="${type}"
-				placeholder="${escape_html(placeholder)}"
-				value="${escape_html(value)}"
-			/>
-		</label>
-	`;
-}
-
-function select_field(label, fieldname, options) {
-	return `
-		<label class="ta-form-field">
-			<span>${__(label)}</span>
-			<select class="form-control" data-field="${fieldname}">
-				${options.map((option) => `<option value="${escape_html(option)}">${__(option)}</option>`).join("")}
-			</select>
-		</label>
 	`;
 }
 
@@ -328,7 +229,7 @@ function render_cost_items(rows, currency) {
 		["预计金额", (row) => format_currency(row.estimated_amount || 0, currency)],
 		["实际金额", (row) => format_currency(row.actual_amount || 0, currency)],
 		["状态", (row) => row.status || docstatus_label(row.docstatus)],
-	]);
+	], "show-cost-dialog");
 }
 
 function render_payment_ledgers(rows, currency) {
@@ -340,7 +241,7 @@ function render_payment_ledgers(rows, currency) {
 		["方式", (row) => row.payment_method || ""],
 		["财务确认", (row) => (row.finance_confirmed ? "是" : "否")],
 		["状态", (row) => docstatus_label(row.docstatus)],
-	]);
+	], "show-payment-dialog");
 }
 
 function render_supplier_payments(rows, currency) {
@@ -353,19 +254,19 @@ function render_supplier_payments(rows, currency) {
 		["方式", (row) => row.payment_method || ""],
 		["财务确认", (row) => (row.finance_confirmed ? "是" : "否")],
 		["状态", (row) => docstatus_label(row.docstatus)],
-	]);
+	], "show-supplier-payment-dialog");
 }
 
-function render_table(title, rows, columns) {
+function render_table(title, rows, columns, action) {
 	if (!rows.length) {
 		return `
-			<div class="ta-section-title">${__(title)}</div>
+			${render_section_header(title, action)}
 			<div class="ta-empty">${__("暂无数据")}</div>
 		`;
 	}
 
 	return `
-		<div class="ta-section-title">${__(title)}</div>
+		${render_section_header(title, action)}
 		<div class="table-responsive">
 			<table class="ta-table">
 				<thead>
@@ -387,6 +288,18 @@ function render_table(title, rows, columns) {
 	`;
 }
 
+function render_section_header(title, action) {
+	const button = action
+		? `<button class="btn btn-primary btn-xs" data-action="${action}">${__("新增")}</button>`
+		: "";
+	return `
+		<div class="ta-section-header">
+			<div class="ta-section-title">${__(title)}</div>
+			${button}
+		</div>
+	`;
+}
+
 function link_to_form(doctype, name, label) {
 	if (!name) {
 		return escape_html(label || "");
@@ -404,84 +317,227 @@ function escape_html(value) {
 }
 
 function bind_business_overview_actions(frm, wrapper) {
-	wrapper.find("[data-action='save-cost']").on("click", () => {
-		const values = get_inline_values(wrapper, "cost");
-		if (!values.cost_category || !values.cost_name) {
-			frappe.msgprint(__("请填写费用类别和费用名称"));
-			return;
-		}
-		save_overview_detail(frm, {
-			method:
-				"travel_agency.travel_agency.doctype.tour_order.tour_order.add_cost_item_from_overview",
-			args: {
-				tour_order: frm.doc.name,
-				cost_category: values.cost_category,
-				cost_name: values.cost_name,
-				supplier: values.supplier,
-				estimated_amount: values.estimated_amount,
-				actual_amount: values.actual_amount,
-				cost_date: values.cost_date,
-			},
-			success_message: __("费用明细已保存"),
-		});
+	wrapper.find("[data-action='show-cost-dialog']").on("click", () => {
+		show_cost_dialog(frm);
 	});
 
-	wrapper.find("[data-action='save-payment']").on("click", () => {
-		const values = get_inline_values(wrapper, "payment");
-		if (!values.amount || Number(values.amount) <= 0) {
-			frappe.msgprint(__("请填写大于 0 的团款金额"));
-			return;
-		}
-		save_overview_detail(frm, {
-			method:
-				"travel_agency.travel_agency.doctype.tour_order.tour_order.add_payment_ledger_from_overview",
-			args: {
-				tour_order: frm.doc.name,
-				transaction_type: values.transaction_type,
-				payment_category: values.payment_category,
-				amount: values.amount,
-				transaction_date: values.transaction_date,
-				payment_method: values.payment_method,
-			},
-			success_message: __("团款流水已保存"),
-		});
+	wrapper.find("[data-action='show-payment-dialog']").on("click", () => {
+		show_payment_dialog(frm);
 	});
 
-	wrapper.find("[data-action='save-supplier-payment']").on("click", () => {
-		const values = get_inline_values(wrapper, "supplier-payment");
-		if (!values.supplier) {
-			frappe.msgprint(__("请填写供应商"));
-			return;
-		}
-		if (!values.amount || Number(values.amount) <= 0) {
-			frappe.msgprint(__("请填写大于 0 的付款金额"));
-			return;
-		}
-		save_overview_detail(frm, {
-			method:
-				"travel_agency.travel_agency.doctype.tour_order.tour_order.add_supplier_payment_from_overview",
-			args: {
-				tour_order: frm.doc.name,
-				supplier: values.supplier,
-				transaction_type: values.transaction_type,
-				payment_category: values.payment_category,
-				amount: values.amount,
-				payment_date: values.payment_date,
-				payment_method: values.payment_method,
-			},
-			success_message: __("供应商付款已保存"),
-		});
+	wrapper.find("[data-action='show-supplier-payment-dialog']").on("click", () => {
+		show_supplier_payment_dialog(frm);
 	});
 }
 
-function get_inline_values(wrapper, section) {
-	const container = wrapper.find(`[data-section='${section}']`);
-	const values = {};
-	container.find("[data-field]").each((index, element) => {
-		const field = $(element);
-		values[field.attr("data-field")] = field.val();
+function show_cost_dialog(frm) {
+	const dialog = new frappe.ui.Dialog({
+		title: __("新增费用明细"),
+		fields: [
+			{
+				fieldname: "cost_category",
+				label: __("费用类别"),
+				fieldtype: "Select",
+				options: ["酒店", "车队", "门票", "导游", "餐费", "机票", "火车票", "签证", "保险", "地接", "其他"].join("\n"),
+				reqd: 1,
+			},
+			{
+				fieldname: "cost_name",
+				label: __("费用名称"),
+				fieldtype: "Data",
+				reqd: 1,
+			},
+			{
+				fieldname: "supplier",
+				label: __("供应商"),
+				fieldtype: "Link",
+				options: "Supplier",
+			},
+			{
+				fieldname: "estimated_amount",
+				label: __("预计金额"),
+				fieldtype: "Currency",
+			},
+			{
+				fieldname: "actual_amount",
+				label: __("实际金额"),
+				fieldtype: "Currency",
+			},
+			{
+				fieldname: "cost_date",
+				label: __("费用日期"),
+				fieldtype: "Date",
+				default: frappe.datetime.get_today(),
+			},
+		],
+		primary_action_label: __("保存"),
+		primary_action(values) {
+			if (!values.cost_category || !values.cost_name) {
+				frappe.msgprint(__("请填写费用类别和费用名称"));
+				return;
+			}
+			if ((Number(values.estimated_amount) || 0) <= 0 && (Number(values.actual_amount) || 0) <= 0) {
+				frappe.msgprint(__("请填写预计金额或实际金额"));
+				return;
+			}
+			save_overview_detail(frm, {
+				method:
+					"travel_agency.travel_agency.doctype.tour_order.tour_order.add_cost_item_from_overview",
+				args: {
+					tour_order: frm.doc.name,
+					cost_category: values.cost_category,
+					cost_name: values.cost_name,
+					supplier: values.supplier,
+					estimated_amount: values.estimated_amount,
+					actual_amount: values.actual_amount,
+					cost_date: values.cost_date,
+				},
+				success_message: __("费用明细已保存"),
+				dialog,
+			});
+		},
 	});
-	return values;
+	dialog.show();
+}
+
+function show_payment_dialog(frm) {
+	const dialog = new frappe.ui.Dialog({
+		title: __("新增团款流水"),
+		fields: [
+			{
+				fieldname: "transaction_type",
+				label: __("流水类型"),
+				fieldtype: "Select",
+				options: ["收款", "退款"].join("\n"),
+				default: "收款",
+				reqd: 1,
+			},
+			{
+				fieldname: "payment_category",
+				label: __("收款类别"),
+				fieldtype: "Select",
+				options: ["定金", "尾款", "补款", "退款", "其他"].join("\n"),
+				reqd: 1,
+			},
+			{
+				fieldname: "amount",
+				label: __("金额"),
+				fieldtype: "Currency",
+				reqd: 1,
+			},
+			{
+				fieldname: "transaction_date",
+				label: __("日期"),
+				fieldtype: "Date",
+				default: frappe.datetime.get_today(),
+			},
+			{
+				fieldname: "payment_method",
+				label: __("收付方式"),
+				fieldtype: "Select",
+				options: ["微信", "支付宝", "现金", "银行卡", "对公转账", "其他"].join("\n"),
+				default: "微信",
+			},
+		],
+		primary_action_label: __("保存"),
+		primary_action(values) {
+			if (!values.amount || Number(values.amount) <= 0) {
+				frappe.msgprint(__("请填写大于 0 的团款金额"));
+				return;
+			}
+			save_overview_detail(frm, {
+				method:
+					"travel_agency.travel_agency.doctype.tour_order.tour_order.add_payment_ledger_from_overview",
+				args: {
+					tour_order: frm.doc.name,
+					transaction_type: values.transaction_type,
+					payment_category: values.payment_category,
+					amount: values.amount,
+					transaction_date: values.transaction_date,
+					payment_method: values.payment_method,
+				},
+				success_message: __("团款流水已保存"),
+				dialog,
+			});
+		},
+	});
+	dialog.show();
+}
+
+function show_supplier_payment_dialog(frm) {
+	const dialog = new frappe.ui.Dialog({
+		title: __("新增供应商付款"),
+		fields: [
+			{
+				fieldname: "supplier",
+				label: __("供应商"),
+				fieldtype: "Link",
+				options: "Supplier",
+				reqd: 1,
+			},
+			{
+				fieldname: "transaction_type",
+				label: __("流水类型"),
+				fieldtype: "Select",
+				options: ["付款", "退款"].join("\n"),
+				default: "付款",
+				reqd: 1,
+			},
+			{
+				fieldname: "payment_category",
+				label: __("付款类别"),
+				fieldtype: "Select",
+				options: ["预付款", "尾款", "补款", "退款", "其他"].join("\n"),
+				reqd: 1,
+			},
+			{
+				fieldname: "amount",
+				label: __("金额"),
+				fieldtype: "Currency",
+				reqd: 1,
+			},
+			{
+				fieldname: "payment_date",
+				label: __("付款日期"),
+				fieldtype: "Date",
+				default: frappe.datetime.get_today(),
+			},
+			{
+				fieldname: "payment_method",
+				label: __("付款方式"),
+				fieldtype: "Select",
+				options: ["微信", "支付宝", "现金", "银行卡", "对公转账", "其他"].join("\n"),
+				default: "对公转账",
+			},
+		],
+		primary_action_label: __("保存"),
+		primary_action(values) {
+			if (!values.supplier) {
+				frappe.msgprint(__("请填写供应商"));
+				return;
+			}
+			if (!values.amount || Number(values.amount) <= 0) {
+				frappe.msgprint(__("请填写大于 0 的付款金额"));
+				return;
+			}
+			save_overview_detail(frm, {
+				method:
+					"travel_agency.travel_agency.doctype.tour_order.tour_order.add_supplier_payment_from_overview",
+				args: {
+					tour_order: frm.doc.name,
+					supplier: values.supplier,
+					transaction_type: values.transaction_type,
+					payment_category: values.payment_category,
+					amount: values.amount,
+					payment_date: values.payment_date,
+					payment_method: values.payment_method,
+				},
+				success_message: __("供应商付款已保存"),
+				dialog,
+			});
+		},
+	});
+	dialog.show();
 }
 
 function save_overview_detail(frm, options) {
@@ -493,6 +549,9 @@ function save_overview_detail(frm, options) {
 		callback(response) {
 			if (response.exc) {
 				return;
+			}
+			if (options.dialog) {
+				options.dialog.hide();
 			}
 			frappe.show_alert({ message: options.success_message, indicator: "green" });
 			frm.reload_doc();
