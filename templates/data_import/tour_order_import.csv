@@ -1,0 +1,3 @@
+tour_order_name,tour_type,customer,contact,sales_owner,order_status,departure_date,return_date,departure_city,destination,route_name,traveler_count,adult_count,child_count,currency,order_total_amount,internal_notes
+贵州6日游-张三一家,定制团,张三,,Administrator,待确认,2026-08-08,2026-08-13,上海,贵州,黄果树-西江千户苗寨,3,2,1,CNY,9000,旧表迁移示例
+企业团建-重庆4日,企业团,某某企业客户,,Administrator,已确认,2026-09-08,2026-09-12,北京,重庆,重庆市区-武隆,12,12,0,CNY,36000,

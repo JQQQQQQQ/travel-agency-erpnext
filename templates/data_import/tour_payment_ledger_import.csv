@@ -1,0 +1,4 @@
+tour_order,customer,transaction_type,payment_category,amount,transaction_date,payment_method,operator,finance_confirmed,remarks
+TOUR-2026-00001,张三,收款,定金,3000,2026-07-02,微信,Administrator,1,客户定金
+TOUR-2026-00001,张三,收款,尾款,6000,2026-08-01,银行卡,Administrator,1,客户尾款
+TOUR-2026-00002,某某企业客户,退款,退款,1000,2026-09-01,对公转账,Administrator,1,人数减少退款

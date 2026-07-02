@@ -1,0 +1,4 @@
+tour_order,customer,supplier,cost_category,cost_name,quantity,estimated_amount,actual_amount,cost_date,status,finance_confirmed,remarks
+TOUR-2026-00001,张三,贵州地接社,地接,贵州地接服务,1,4200,4300,2026-07-20,已确认,1,含车导门票
+TOUR-2026-00001,张三,贵州地接社,酒店,贵阳酒店,3,1800,1950,2026-07-20,已确认,1,三晚住宿
+TOUR-2026-00002,某某企业客户,云南车队,车队,重庆当地用车,1,5000,4800,2026-08-25,已确认,1,

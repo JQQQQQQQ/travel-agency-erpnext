@@ -1,0 +1,4 @@
+tour_order,customer,supplier,cost_item,transaction_type,payment_category,amount,payment_date,payment_method,operator,finance_confirmed,remarks
+TOUR-2026-00001,张三,贵州地接社,,付款,预付款,2000,2026-07-25,对公转账,Administrator,1,地接预付款
+TOUR-2026-00001,张三,贵州地接社,,付款,尾款,4250,2026-08-15,对公转账,Administrator,1,地接尾款
+TOUR-2026-00002,某某企业客户,云南车队,,退款,退款,500,2026-09-20,对公转账,Administrator,1,供应商退差价
