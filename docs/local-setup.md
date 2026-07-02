@@ -40,6 +40,18 @@ cd frappe_docker
 docker compose -f pwd.yml up -d
 ```
 
+本仓库也提供了封装脚本。请在 Windows PowerShell 中进入项目目录后执行：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\start-erpnext-demo.ps1
+```
+
+停止 demo：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\stop-erpnext-demo.ps1
+```
+
 说明：
 
 - `pwd.yml` 适合短期体验
