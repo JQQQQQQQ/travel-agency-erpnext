@@ -34,6 +34,8 @@
   "pending_payment_amount",
   "estimated_profit_amount",
   "actual_profit_amount",
+  "business_overview_section",
+  "business_overview_html",
   "notes_section",
   "internal_notes"
  ],
@@ -241,6 +243,16 @@
    "label": "实际毛利",
    "options": "currency",
    "read_only": 1
+  },
+  {
+   "fieldname": "business_overview_section",
+   "fieldtype": "Section Break",
+   "label": "业务总览"
+  },
+  {
+   "fieldname": "business_overview_html",
+   "fieldtype": "HTML",
+   "label": "业务总览"
   },
   {
    "fieldname": "notes_section",

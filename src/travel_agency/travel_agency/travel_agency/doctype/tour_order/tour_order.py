@@ -92,3 +92,75 @@ class TourOrder(Document):
 		self.paid_amount = (row.paid_amount or 0) - (row.supplier_refund_amount or 0)
 		self.calculate_amounts()
 		self.db_update()
+
+
+@frappe.whitelist()
+def get_tour_order_overview(tour_order):
+	doc = frappe.get_doc("Tour Order", tour_order)
+	doc.check_permission("read")
+
+	return {
+		"summary": {
+			"order_total_amount": doc.order_total_amount or 0,
+			"received_amount": doc.received_amount or 0,
+			"refunded_amount": doc.refunded_amount or 0,
+			"pending_receipt_amount": doc.pending_receipt_amount or 0,
+			"estimated_cost_amount": doc.estimated_cost_amount or 0,
+			"actual_cost_amount": doc.actual_cost_amount or 0,
+			"paid_amount": doc.paid_amount or 0,
+			"pending_payment_amount": doc.pending_payment_amount or 0,
+			"estimated_profit_amount": doc.estimated_profit_amount or 0,
+			"actual_profit_amount": doc.actual_profit_amount or 0,
+			"currency": doc.currency,
+		},
+		"cost_items": frappe.get_all(
+			"Tour Cost Item",
+			filters={"tour_order": tour_order, "docstatus": ["<", 2]},
+			fields=[
+				"name",
+				"cost_category",
+				"cost_name",
+				"supplier",
+				"estimated_amount",
+				"actual_amount",
+				"cost_date",
+				"status",
+				"docstatus",
+			],
+			order_by="cost_date desc, modified desc",
+			limit_page_length=20,
+		),
+		"payment_ledgers": frappe.get_all(
+			"Tour Payment Ledger",
+			filters={"tour_order": tour_order, "docstatus": ["<", 2]},
+			fields=[
+				"name",
+				"transaction_type",
+				"payment_category",
+				"amount",
+				"transaction_date",
+				"payment_method",
+				"finance_confirmed",
+				"docstatus",
+			],
+			order_by="transaction_date desc, modified desc",
+			limit_page_length=20,
+		),
+		"supplier_payments": frappe.get_all(
+			"Supplier Payment Record",
+			filters={"tour_order": tour_order, "docstatus": ["<", 2]},
+			fields=[
+				"name",
+				"supplier",
+				"transaction_type",
+				"payment_category",
+				"amount",
+				"payment_date",
+				"payment_method",
+				"finance_confirmed",
+				"docstatus",
+			],
+			order_by="payment_date desc, modified desc",
+			limit_page_length=20,
+		),
+	}
