@@ -1,5 +1,6 @@
 import frappe
 from frappe.model.document import Document
+from frappe.utils import flt, nowdate
 
 
 class TourOrder(Document):
@@ -164,3 +165,101 @@ def get_tour_order_overview(tour_order):
 			limit_page_length=20,
 		),
 	}
+
+
+@frappe.whitelist()
+def add_cost_item_from_overview(
+	tour_order,
+	cost_category,
+	cost_name,
+	estimated_amount=0,
+	actual_amount=0,
+	supplier=None,
+	cost_date=None,
+):
+	tour_order_doc = get_tour_order_for_write(tour_order)
+	doc = frappe.get_doc(
+		{
+			"doctype": "Tour Cost Item",
+			"tour_order": tour_order_doc.name,
+			"customer": tour_order_doc.customer,
+			"supplier": supplier,
+			"cost_category": cost_category,
+			"cost_name": cost_name,
+			"quantity": 1,
+			"estimated_amount": flt(estimated_amount),
+			"actual_amount": flt(actual_amount),
+			"cost_date": cost_date or nowdate(),
+			"status": "已确认",
+			"finance_confirmed": 1,
+		}
+	)
+	doc.insert()
+	doc.submit()
+	return {"name": doc.name, "overview": get_tour_order_overview(tour_order_doc.name)}
+
+
+@frappe.whitelist()
+def add_payment_ledger_from_overview(
+	tour_order,
+	transaction_type,
+	payment_category,
+	amount,
+	transaction_date=None,
+	payment_method=None,
+):
+	tour_order_doc = get_tour_order_for_write(tour_order)
+	doc = frappe.get_doc(
+		{
+			"doctype": "Tour Payment Ledger",
+			"tour_order": tour_order_doc.name,
+			"customer": tour_order_doc.customer,
+			"transaction_type": transaction_type,
+			"payment_category": payment_category,
+			"amount": flt(amount),
+			"transaction_date": transaction_date or nowdate(),
+			"payment_method": payment_method or "微信",
+			"operator": frappe.session.user,
+			"finance_confirmed": 1,
+		}
+	)
+	doc.insert()
+	doc.submit()
+	return {"name": doc.name, "overview": get_tour_order_overview(tour_order_doc.name)}
+
+
+@frappe.whitelist()
+def add_supplier_payment_from_overview(
+	tour_order,
+	supplier,
+	transaction_type,
+	payment_category,
+	amount,
+	payment_date=None,
+	payment_method=None,
+):
+	tour_order_doc = get_tour_order_for_write(tour_order)
+	doc = frappe.get_doc(
+		{
+			"doctype": "Supplier Payment Record",
+			"tour_order": tour_order_doc.name,
+			"customer": tour_order_doc.customer,
+			"supplier": supplier,
+			"transaction_type": transaction_type,
+			"payment_category": payment_category,
+			"amount": flt(amount),
+			"payment_date": payment_date or nowdate(),
+			"payment_method": payment_method or "对公转账",
+			"operator": frappe.session.user,
+			"finance_confirmed": 1,
+		}
+	)
+	doc.insert()
+	doc.submit()
+	return {"name": doc.name, "overview": get_tour_order_overview(tour_order_doc.name)}
+
+
+def get_tour_order_for_write(tour_order):
+	doc = frappe.get_doc("Tour Order", tour_order)
+	doc.check_permission("write")
+	return doc

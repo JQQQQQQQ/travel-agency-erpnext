@@ -1,6 +1,11 @@
 import frappe
 
-from travel_agency.travel_agency.doctype.tour_order.tour_order import get_tour_order_overview
+from travel_agency.travel_agency.doctype.tour_order.tour_order import (
+	add_cost_item_from_overview,
+	add_payment_ledger_from_overview,
+	add_supplier_payment_from_overview,
+	get_tour_order_overview,
+)
 
 
 def make_customer():
@@ -135,6 +140,42 @@ def main():
 	assert any(row.name == payment.name for row in overview["payment_ledgers"])
 	assert any(row.name == cost.name for row in overview["cost_items"])
 	assert any(row.name == supplier_payment.name for row in overview["supplier_payments"])
+
+	inline_cost = add_cost_item_from_overview(
+		tour_order.name,
+		cost_category="酒店",
+		cost_name="总览内新增酒店",
+		supplier=supplier,
+		estimated_amount=1200,
+		actual_amount=1300,
+		cost_date="2026-07-03",
+	)
+	inline_payment = add_payment_ledger_from_overview(
+		tour_order.name,
+		transaction_type="收款",
+		payment_category="补款",
+		amount=2000,
+		transaction_date="2026-07-03",
+		payment_method="银行卡",
+	)
+	inline_supplier_payment = add_supplier_payment_from_overview(
+		tour_order.name,
+		supplier=supplier,
+		transaction_type="付款",
+		payment_category="补款",
+		amount=1000,
+		payment_date="2026-07-03",
+		payment_method="对公转账",
+	)
+
+	overview = get_tour_order_overview(tour_order.name)
+	assert overview["summary"]["received_amount"] == 8000
+	assert overview["summary"]["actual_cost_amount"] == 8300
+	assert overview["summary"]["paid_amount"] == 4000
+	assert overview["summary"]["actual_profit_amount"] == -300
+	assert any(row.name == inline_cost["name"] for row in overview["cost_items"])
+	assert any(row.name == inline_payment["name"] for row in overview["payment_ledgers"])
+	assert any(row.name == inline_supplier_payment["name"] for row in overview["supplier_payments"])
 
 	print(f"Tour Order: {tour_order.name}")
 	print(f"Cost Items: {len(overview['cost_items'])}")
