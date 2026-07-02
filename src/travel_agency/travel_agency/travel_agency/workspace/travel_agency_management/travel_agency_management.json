@@ -1,0 +1,160 @@
+{
+ "app": "travel_agency",
+ "charts": [],
+ "content": "[{\"id\":\"ta-header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>旅行社业务</b></span>\",\"col\":12}},{\"id\":\"ta-core\",\"type\":\"card\",\"data\":{\"card_name\":\"核心业务\",\"col\":4}},{\"id\":\"ta-finance\",\"type\":\"card\",\"data\":{\"card_name\":\"财务流水\",\"col\":4}},{\"id\":\"ta-reports\",\"type\":\"card\",\"data\":{\"card_name\":\"经营报表\",\"col\":4}},{\"id\":\"ta-master-header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>基础资料</b></span>\",\"col\":12}},{\"id\":\"ta-master\",\"type\":\"card\",\"data\":{\"card_name\":\"客户与供应商\",\"col\":4}}]",
+ "creation": "2026-07-02 00:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "map",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "旅行社管理",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "核心业务",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "旅行团单",
+   "link_count": 0,
+   "link_to": "Tour Order",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "Tour Order",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "团单费用明细",
+   "link_count": 0,
+   "link_to": "Tour Cost Item",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "财务流水",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "Tour Order",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "团款流水",
+   "link_count": 0,
+   "link_to": "Tour Payment Ledger",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "Tour Order, Supplier",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "供应商付款单",
+   "link_count": 0,
+   "link_to": "Supplier Payment Record",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "经营报表",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "Tour Order",
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "团单利润表",
+   "link_count": 0,
+   "link_to": "Tour Order Profit Report",
+   "link_type": "Report",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "Tour Order",
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "应收应付汇总表",
+   "link_count": 0,
+   "link_to": "Receivable Payable Summary",
+   "link_type": "Report",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "客户与供应商",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "客户",
+   "link_count": 0,
+   "link_to": "Customer",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "供应商",
+   "link_count": 0,
+   "link_to": "Supplier",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-07-02 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Travel Agency",
+ "name": "旅行社管理",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Sales User"
+  },
+  {
+   "role": "Accounts User"
+  }
+ ],
+ "sequence_id": 1.0,
+ "shortcuts": [],
+ "title": "旅行社管理"
+}
