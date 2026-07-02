@@ -75,3 +75,20 @@ class TourOrder(Document):
 		self.actual_cost_amount = row.actual_cost_amount or 0
 		self.calculate_amounts()
 		self.db_update()
+
+	def recompute_supplier_payment_totals(self):
+		row = frappe.db.sql(
+			"""
+			select
+				sum(case when transaction_type = '付款' then amount else 0 end) as paid_amount,
+				sum(case when transaction_type = '退款' then amount else 0 end) as supplier_refund_amount
+			from `tabSupplier Payment Record`
+			where tour_order = %s and docstatus = 1
+			""",
+			self.name,
+			as_dict=True,
+		)[0]
+
+		self.paid_amount = (row.paid_amount or 0) - (row.supplier_refund_amount or 0)
+		self.calculate_amounts()
+		self.db_update()

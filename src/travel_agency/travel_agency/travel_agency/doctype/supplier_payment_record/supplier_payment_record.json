@@ -1,0 +1,183 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:SPR-{YYYY}-{#####}",
+ "creation": "2026-07-02 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_info_section",
+  "tour_order",
+  "customer",
+  "supplier",
+  "cost_item",
+  "transaction_type",
+  "payment_category",
+  "amount",
+  "payment_date",
+  "payment_method",
+  "operator",
+  "finance_confirmed",
+  "voucher_attachment",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "basic_info_section",
+   "fieldtype": "Section Break",
+   "label": "基本信息"
+  },
+  {
+   "fieldname": "tour_order",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "旅行团单",
+   "options": "Tour Order",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "客户",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "供应商",
+   "options": "Supplier",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cost_item",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "关联费用明细",
+   "options": "Tour Cost Item"
+  },
+  {
+   "fieldname": "transaction_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "流水类型",
+   "options": "付款\n退款",
+   "reqd": 1
+  },
+  {
+   "fieldname": "payment_category",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "付款类别",
+   "options": "预付款\n尾款\n补款\n退款\n其他",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "金额",
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "payment_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "付款日期",
+   "reqd": 1
+  },
+  {
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "付款方式",
+   "options": "微信\n支付宝\n现金\n银行卡\n对公转账\n其他",
+   "reqd": 1
+  },
+  {
+   "default": "__user",
+   "fieldname": "operator",
+   "fieldtype": "Link",
+   "label": "经办人",
+   "options": "User"
+  },
+  {
+   "default": "0",
+   "fieldname": "finance_confirmed",
+   "fieldtype": "Check",
+   "label": "财务已确认"
+  },
+  {
+   "fieldname": "voucher_attachment",
+   "fieldtype": "Attach",
+   "label": "凭证附件"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "备注"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-07-02 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Travel Agency",
+ "name": "Supplier Payment Record",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
