@@ -39,3 +39,21 @@ class TourOrder(Document):
 		self.pending_payment_amount = actual_cost - paid
 		self.estimated_profit_amount = order_total - estimated_cost
 		self.actual_profit_amount = received - actual_cost
+
+	def recompute_payment_totals(self):
+		row = frappe.db.sql(
+			"""
+			select
+				sum(case when transaction_type = '收款' then amount else 0 end) as received_amount,
+				sum(case when transaction_type = '退款' then amount else 0 end) as refunded_amount
+			from `tabTour Payment Ledger`
+			where tour_order = %s and docstatus = 1
+			""",
+			self.name,
+			as_dict=True,
+		)[0]
+
+		self.received_amount = row.received_amount or 0
+		self.refunded_amount = row.refunded_amount or 0
+		self.calculate_amounts()
+		self.db_update()
